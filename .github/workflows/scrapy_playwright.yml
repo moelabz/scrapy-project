@@ -1,0 +1,29 @@
+name: Scrape Laws PDFs
+
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Runs every day at 12:00 UTC
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install scrapy scrapy-playwright
+
+      - name: Install Playwright Browsers
+        run: playwright install chromium
+
+      - name: Run Scrapy Spider
+        run: scrapy crawl laws_spider
