@@ -1,19 +1,27 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import requests
 import os
 
-# Setup Selenium on Railway (Headless Mode)
-options = webdriver.ChromeOptions()
+# Set up Chrome options for headless browsing
+options = Options()
 options.add_argument("--headless")
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 
-service = Service("/usr/bin/chromedriver")  # Railway installs ChromeDriver here
+# Set the path to the chromedriver (Render's default location)
+driver_path = "/usr/bin/chromedriver"
+
+# Set the path to Chrome itself
+options.binary_location = "/usr/bin/google-chrome"  # Add this line to specify the Chrome binary
+
+# Create a service object using the chromedriver path
+service = Service(driver_path)
 driver = webdriver.Chrome(service=service, options=options)
 
 # Base URL
