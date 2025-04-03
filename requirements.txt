@@ -1,0 +1,3 @@
+selenium
+requests
+flask  # Optional, if you want a web interface
